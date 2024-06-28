@@ -1,4 +1,4 @@
-package main
+package web
 
 import (
 	"flag"
@@ -8,14 +8,18 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func main() {
+func Run() error {
 
 	router, err := createRouter()
 	if err != nil {
-		panic(err)
+		return err
 	}
 
-	http.ListenAndServe(":80", router)
+	if err := http.ListenAndServe(":80", router); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func createRouter() (*mux.Router, error) {
